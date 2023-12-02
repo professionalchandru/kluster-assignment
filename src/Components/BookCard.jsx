@@ -92,7 +92,7 @@ export const AddToCartButton = ({ isSelected, onClick }) => {
         }  rounded-lg border border-special text-white text-ellipsis overflow-hidden whitespace-nowrap`}
         onClick={onClick}
       >
-        {isSelected ? "Added" : "Add to cart"}
+        {isSelected ? "Remove" : "Add to cart"}
       </button>
     </>
   );

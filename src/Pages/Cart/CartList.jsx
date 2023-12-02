@@ -64,36 +64,6 @@ const CartList = ({ cart, addBookToCart, removeBookFromCart }) => {
             </span>
           </div>
         )}
-        {/* <div className="flex flex-row flex-wrap gap-10 justify-start">
-          {cart?.booksArray?.map((book) => {
-            let work = book.work;
-            return (
-              <Fragment key={work?.cover_id + "adfa"}>
-                <BookCard>
-                  <BookCard.Cover
-                    src={
-                      work?.cover_edition_key
-                        ? `https://covers.openlibrary.org/b/olid/${work?.cover_edition_key}-M.jpg`
-                        : ""
-                    }
-                    alt="Book-Cover"
-                    classNames="pt-2 w-56 h-44"
-                    onClick={() => handleClickBook(work)}
-                  />
-                  <BookCard.BookDetailsContainer>
-                    <BookCard.Title text={work?.title} />
-                    <BookCard.Author text={work?.author_names[0]} />
-                    <BookCard.Price text={book?.price} />
-                    <BookCard.AddToCart
-                      isSelected={book?.isSelected}
-                      onClick={() => handleAddToCart(book)}
-                    />
-                  </BookCard.BookDetailsContainer>
-                </BookCard>
-              </Fragment>
-            );
-          })}
-        </div> */}
       </div>
     </>
   );
