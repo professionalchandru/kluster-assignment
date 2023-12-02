@@ -13,7 +13,12 @@ const CartList = ({ cart, addBookToCart, removeBookFromCart }) => {
 
   const handleAddToCart = (book) => {
     if (book?.isSelected) {
-      removeBookFromCart(book);
+      const confirmation = confirm(
+        "Do you want to remove this item from cart?"
+      );
+      if (confirmation) {
+        removeBookFromCart(book);
+      }
     } else {
       addBookToCart(book);
     }
