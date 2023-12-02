@@ -25,6 +25,6 @@ Thing to say to interviewr:
 4. Some images might be not present beacuse of either api doesn't give the books img or img id.
 5. Filtered by authors in books section doesn't clickable because we don't have enough information from the filter api.
 
-Again I'm saying I can do a more better design and functionality If I have a wireframe and correct backend apis and their structure.
+Again I'm saying I can do a more better ui and functionality If I have a wireframe and correct backend apis and their structure.
 
 Thank you for spending time to read this full read.me page
