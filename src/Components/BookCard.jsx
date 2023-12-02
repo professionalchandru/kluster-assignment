@@ -95,13 +95,15 @@ export const BookPrice = ({ text }) => {
   );
 };
 
-export const AddToCartButton = ({ isSelected }) => {
+export const AddToCartButton = ({ isSelected, onClick }) => {
+  // console.log("isSelected", isSelected);
   return (
     <>
       <button
         className={`py-1 mt-1 text-center w-full ${
           isSelected ? "bg-special" : "bg-successDarker"
         }  rounded-lg border border-special text-white text-ellipsis overflow-hidden whitespace-nowrap`}
+        onClick={onClick}
       >
         {isSelected ? "Added" : "Add to cart"}
       </button>

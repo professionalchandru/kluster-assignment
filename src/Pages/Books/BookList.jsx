@@ -1,8 +1,13 @@
+/* eslint-disable react-refresh/only-export-components */
 import { Fragment } from "react";
 import BookCard from "../../Components/BookCard";
-import { Randoms } from "../../Utils/Random";
 import { Authors } from "../../Utils/Constants";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+import {
+  addBookToCart,
+  removeBookFromCart,
+} from "../../Redux/Actions/AppActions";
 
 /* eslint-disable react/prop-types */
 const BookList = ({
@@ -11,6 +16,8 @@ const BookList = ({
   setSelectedAuthor,
   isSortedList,
   handleClearSort,
+  addBookToCart,
+  removeBookFromCart,
 }) => {
   const navigate = useNavigate();
 
@@ -29,6 +36,14 @@ const BookList = ({
         authors: work.author_names,
       },
     });
+  };
+
+  const handleAddToCart = (book) => {
+    if (book?.isSelected) {
+      removeBookFromCart(book);
+    } else {
+      addBookToCart(book);
+    }
   };
 
   return (
@@ -80,7 +95,7 @@ const BookList = ({
                     />
                     <BookCard.BookDetailsContainer>
                       <BookCard.Title text={book?.title} />
-                      <BookCard.Price text={Randoms.Price()} />
+                      <BookCard.Price text={book?.price} />
                     </BookCard.BookDetailsContainer>
                   </BookCard>
                 </Fragment>
@@ -92,7 +107,7 @@ const BookList = ({
             {books?.map((book) => {
               let work = book.work;
               return (
-                <Fragment key={work?.cover_id + Randoms.Price()}>
+                <Fragment key={work?.cover_id + "adfa"}>
                   <BookCard>
                     <BookCard.Cover
                       src={
@@ -108,7 +123,10 @@ const BookList = ({
                       <BookCard.Title text={work?.title} />
                       <BookCard.Author text={work?.author_names[0]} />
                       <BookCard.Price text={book?.price} />
-                      <BookCard.AddToCart isSelected={book?.isSelected} />
+                      <BookCard.AddToCart
+                        isSelected={book?.isSelected}
+                        onClick={() => handleAddToCart(book)}
+                      />
                     </BookCard.BookDetailsContainer>
                   </BookCard>
                 </Fragment>
@@ -121,4 +139,14 @@ const BookList = ({
   );
 };
 
-export default BookList;
+const mapStateToProps = (state) => {
+  return {
+    booksList: state.app.booksList,
+  };
+};
+const mapDispatchToProps = {
+  addBookToCart: (book) => addBookToCart(book),
+  removeBookFromCart: (book) => removeBookFromCart(book),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookList);

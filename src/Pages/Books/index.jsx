@@ -3,7 +3,10 @@
 import { connect } from "react-redux";
 import PageContainer from "../../Components/PageContainer";
 import BookList from "./BookList";
-import { getBooksList } from "../../Redux/Actions/AppActions";
+import {
+  changeBooksArrayUpdated,
+  getBooksList,
+} from "../../Redux/Actions/AppActions";
 import { useEffect, useState } from "react";
 import {
   Author_Amir_Books,
@@ -14,7 +17,13 @@ import {
 } from "../../Utils/Urls";
 import axios from "axios";
 
-const Books = ({ getBooksList, booksList }) => {
+const Books = ({
+  getBooksList,
+  booksList,
+  changeBooksArrayUpdated,
+  booksArrayUpdated,
+  initialBookList,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const bookPerPage = 12;
   const [currentBookArray, setCurrentBookArray] = useState([]);
@@ -26,16 +35,24 @@ const Books = ({ getBooksList, booksList }) => {
   const [selectedAuthor, setSelectedAuthor] = useState("");
 
   useEffect(() => {
+    if (booksArrayUpdated) {
+      changeBooksArrayUpdated(false);
+      setCurrentBookArray(currentBookArray);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [booksArrayUpdated]);
+
+  useEffect(() => {
     getBooksList();
   }, [getBooksList]);
 
   useEffect(() => {
-    if (booksList?.length > 0 && firstRender) {
+    if (initialBookList?.length > 0 && firstRender) {
       setFirstRender(false);
-      handlePaginate(1);
+      setCurrentBookArray(initialBookList);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [booksList]);
+  }, [initialBookList]);
 
   useEffect(() => {
     if (selectedAuthor !== "") {
@@ -104,6 +121,7 @@ const Books = ({ getBooksList, booksList }) => {
         <BookList
           books={sortedBooksArray?.length ? sortedBooksArray : currentBookArray}
           setSelectedAuthor={setSelectedAuthor}
+          setCurrentBookArray={setCurrentBookArray}
           selectedAuthor={selectedAuthor}
           isSortedList={sortedBooksArray?.length > 0 ? true : false}
           handleClearSort={handleClearSort}
@@ -127,10 +145,13 @@ const Books = ({ getBooksList, booksList }) => {
 const mapStateToProps = (state) => {
   return {
     booksList: state.app.booksList,
+    booksArrayUpdated: state.app.booksArrayUpdated,
+    initialBookList: state.app.initialBookList,
   };
 };
 const mapDispatchToProps = {
   getBooksList: () => getBooksList(),
+  changeBooksArrayUpdated: (value) => changeBooksArrayUpdated(value),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Books);
