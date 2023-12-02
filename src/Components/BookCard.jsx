@@ -24,24 +24,37 @@ const BookCard = ({ children }) => {
 
 export default BookCard;
 
-export const BookCover = ({ src, alt, classNames }) => {
+export const BookCover = ({ src, alt, classNames, onClick }) => {
   return (
     <>
-      <div className="flex flex-col items-center">
+      <div onClick={onClick} className="flex flex-col items-center">
         <img src={src} alt={alt} className={classNames} />
       </div>
     </>
   );
 };
 
-export const BookTitle = ({ text }) => {
+export const BookTitle = ({ text, title }) => {
   return (
     <>
-      <p
-        className={`pt-2 text-center text-secondary font-bold text-lg italic ${commonClass}`}
-      >
-        {text}
-      </p>
+      {title ? (
+        <div className="inline-flex space-x-4 items-center">
+          <span className="pt-2 text-primary font-medium text-lg" htmlFor="">
+            {title}
+          </span>
+          <p
+            className={`pt-2 text-center text-secondary font-bold text-lg italic ${commonClass}`}
+          >
+            {text}
+          </p>
+        </div>
+      ) : (
+        <p
+          className={`pt-2 text-center text-secondary font-bold text-lg italic ${commonClass}`}
+        >
+          {text}
+        </p>
+      )}
     </>
   );
 };
@@ -82,13 +95,15 @@ export const BookPrice = ({ text }) => {
   );
 };
 
-export const AddToCartButton = () => {
+export const AddToCartButton = ({ isSelected }) => {
   return (
     <>
       <button
-        className={`py-1 mt-1 text-center w-full bg-successDarker rounded-lg border border-special text-white text-ellipsis overflow-hidden whitespace-nowrap`}
+        className={`py-1 mt-1 text-center w-full ${
+          isSelected ? "bg-special" : "bg-successDarker"
+        }  rounded-lg border border-special text-white text-ellipsis overflow-hidden whitespace-nowrap`}
       >
-        Add to cart
+        {isSelected ? "Added" : "Add to cart"}
       </button>
     </>
   );

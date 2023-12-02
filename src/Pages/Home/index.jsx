@@ -10,12 +10,11 @@ import { useEffect } from "react";
 const Home = ({ getFeaturedBooks, featuredBooks }) => {
   useEffect(() => {
     getFeaturedBooks();
-  }, []);
+  }, [getFeaturedBooks]);
   return (
     <>
       <PageContainer>
         <WelcomeBanner />
-
         <FeaturedBooks books={featuredBooks} />
       </PageContainer>
     </>

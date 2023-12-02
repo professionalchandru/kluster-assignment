@@ -32,7 +32,7 @@ const NavBar = () => {
             onClick={() => handleClick("/")}
           />
           <Li
-            isActive={activePage === "/books"}
+            isActive={activePage === "/books" || activePage.includes("/books/")}
             text="Books"
             onClick={() => handleClick("/books")}
           />

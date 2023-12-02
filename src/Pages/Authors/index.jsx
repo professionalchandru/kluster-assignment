@@ -1,4 +1,4 @@
-import PageContainer from "../Components/PageContainer";
+import PageContainer from "../../Components/PageContainer";
 
 const Authors = () => {
   return (
