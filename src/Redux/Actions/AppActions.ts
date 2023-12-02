@@ -69,7 +69,7 @@ export const removeBookFromCart = (bookToRemove) => (dispatch, getData) => {
 
     oldCartData.totalAmount = parseInt(oldCartData.totalAmount) - parseInt(bookToRemove?.price)
     oldCartData.noOfItems = parseInt(oldCartData.noOfItems) - 1;
-    oldCartData.booksArray.push(bookToRemove)
+    oldCartData.booksArray = oldCartData.booksArray.filter((item) => item?.work?.cover_id !== bookToRemove?.work?.cover_id)
     bookToRemove['isSelected'] = false;
     dispatch({ type: 'addBookToCart', payload: { ...oldCartData } })
     dispatch({ type: 'changeBooksArrayUpdated', payload: true })

@@ -4,18 +4,6 @@ const BookCard = ({ children }) => {
   return (
     <>
       <div className="bg-white shadow-lg rounded-lg h-80 w-64 border border-borderPrimary cursor-pointer">
-        {/* <BookCover
-          src={`https://covers.openlibrary.org/b/isbn/0385472579-M.jpg`}
-          alt="book-img"
-          classNames="pt-2 w-56 h-44"
-        />
-        <BookDetailsContainer>
-          <BookTitle text="Battle of Maldon" />
-          <Author text="Sam Walton" />
-          <BookPrice text="100" />
-          <AddToCartButton />
-        </BookDetailsContainer> */}
-
         {children}
       </div>
     </>
@@ -96,7 +84,6 @@ export const BookPrice = ({ text }) => {
 };
 
 export const AddToCartButton = ({ isSelected, onClick }) => {
-  // console.log("isSelected", isSelected);
   return (
     <>
       <button

@@ -2,12 +2,13 @@
 import { Fragment } from "react";
 import BookCard from "../../Components/BookCard";
 import { Authors } from "../../Utils/Constants";
-import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import {
   addBookToCart,
   removeBookFromCart,
 } from "../../Redux/Actions/AppActions";
+import BookCardTemplate from "../../Components/BookCardTemplate";
+import { Randoms } from "../../Utils/Random";
 
 /* eslint-disable react/prop-types */
 const BookList = ({
@@ -19,23 +20,12 @@ const BookList = ({
   addBookToCart,
   removeBookFromCart,
 }) => {
-  const navigate = useNavigate();
-
   const handleAuthorChange = (e) => {
     if (e.target.value === "") {
       handleClearSort();
     } else {
       setSelectedAuthor(e.target.value);
     }
-  };
-
-  const handleClickBook = (work) => {
-    const splitedKey = work?.key.split("/works/")[1];
-    navigate(splitedKey, {
-      state: {
-        authors: work.author_names,
-      },
-    });
   };
 
   const handleAddToCart = (book) => {
@@ -95,7 +85,7 @@ const BookList = ({
                     />
                     <BookCard.BookDetailsContainer>
                       <BookCard.Title text={book?.title} />
-                      <BookCard.Price text={book?.price} />
+                      <BookCard.Price text={Randoms.Price()} />
                     </BookCard.BookDetailsContainer>
                   </BookCard>
                 </Fragment>
@@ -103,36 +93,7 @@ const BookList = ({
             })}
           </div>
         ) : (
-          <div className="flex flex-row flex-wrap gap-10 justify-start">
-            {books?.map((book) => {
-              let work = book.work;
-              return (
-                <Fragment key={work?.cover_id + "adfa"}>
-                  <BookCard>
-                    <BookCard.Cover
-                      src={
-                        work?.cover_edition_key
-                          ? `https://covers.openlibrary.org/b/olid/${work?.cover_edition_key}-M.jpg`
-                          : ""
-                      }
-                      alt="Book-Cover"
-                      classNames="pt-2 w-56 h-44"
-                      onClick={() => handleClickBook(work)}
-                    />
-                    <BookCard.BookDetailsContainer>
-                      <BookCard.Title text={work?.title} />
-                      <BookCard.Author text={work?.author_names[0]} />
-                      <BookCard.Price text={book?.price} />
-                      <BookCard.AddToCart
-                        isSelected={book?.isSelected}
-                        onClick={() => handleAddToCart(book)}
-                      />
-                    </BookCard.BookDetailsContainer>
-                  </BookCard>
-                </Fragment>
-              );
-            })}
-          </div>
+          <BookCardTemplate books={books} handleAddToCart={handleAddToCart} />
         )}
       </div>
     </>
