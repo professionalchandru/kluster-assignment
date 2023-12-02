@@ -1,9 +1,21 @@
 import { Fragment } from "react";
 import BookCard from "../../Components/BookCard";
 import { Randoms } from "../../Utils/Random";
+import { useNavigate } from "react-router-dom";
 
 /* eslint-disable react/prop-types */
 const FeaturedBooks = ({ books }) => {
+  const navigate = useNavigate();
+
+  const handleClickBook = (work) => {
+    const splitedKey = work?.key.split("/works/")[1];
+    navigate("/books/" + splitedKey, {
+      state: {
+        authors: work.author_names,
+      },
+    });
+  };
+
   return (
     <>
       <div className="py-10 space-y-6">
@@ -23,6 +35,7 @@ const FeaturedBooks = ({ books }) => {
                     }
                     alt="Book-Cover"
                     classNames="pt-2 w-56 h-44"
+                    onClick={() => handleClickBook(work)}
                   />
                   <BookCard.BookDetailsContainer>
                     <BookCard.Title text={work.title} />
