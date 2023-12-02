@@ -6,29 +6,48 @@ import {
   changeBooksArrayUpdated,
   getBooksList,
 } from "../../Redux/Actions/AppActions";
-import { useEffect, useState } from "react";
+import { Fragment } from "react";
+import { AuthorsList } from "../../Utils/Constants";
+import { useNavigate } from "react-router-dom";
 
-const Authors = ({ changeBooksArrayUpdated, booksArrayUpdated }) => {
-  const [currentBookArray, setCurrentBookArray] = useState([]);
+const Authors = () => {
+  const navigate = useNavigate();
+  const handleAuthorClick = (author) => {
+    navigate("/authors/" + author.id);
+  };
 
-  useEffect(() => {
-    if (booksArrayUpdated) {
-      changeBooksArrayUpdated(false);
-      setCurrentBookArray(currentBookArray);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [booksArrayUpdated]);
   return (
     <>
       <PageContainer>
-        {/* <BookList
-          books={sortedBooksArray?.length ? sortedBooksArray : currentBookArray}
-          setSelectedAuthor={setSelectedAuthor}
-          setCurrentBookArray={setCurrentBookArray}
-          selectedAuthor={selectedAuthor}
-          isSortedList={sortedBooksArray?.length > 0 ? true : false}
-          handleClearSort={handleClearSort}
-        /> */}
+        <div className="py-10 space-y-6">
+          <div className="flex flex-row justify-between items-center">
+            <h2 className="text-xl font-semibold text-primary">Authors</h2>
+          </div>
+        </div>
+
+        <div className="px-10 flex flex-row flex-wrap gap-10 justify-evenly">
+          {AuthorsList?.map((author) => {
+            return (
+              <Fragment key={author.author_keys}>
+                <div
+                  className="w-60 h-80 bg-white shadow-lg rounded-lg border border-borderPrimary cursor-pointer"
+                  onClick={() => handleAuthorClick(author)}
+                >
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={author.photo}
+                      alt={author.author_names}
+                      className="pt-2 w-56 h-56"
+                    />
+                  </div>
+                  <p className="px-4 pt-6 text-xl font-semibold text-special text-center ">
+                    {author.author_names}
+                  </p>
+                </div>
+              </Fragment>
+            );
+          })}
+        </div>
       </PageContainer>
     </>
   );

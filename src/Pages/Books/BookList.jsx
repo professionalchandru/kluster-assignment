@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { Fragment } from "react";
 import BookCard from "../../Components/BookCard";
-import { Authors } from "../../Utils/Constants";
+import { AuthorsList } from "../../Utils/Constants";
 import { connect } from "react-redux";
 import {
   addBookToCart,
@@ -53,7 +53,7 @@ const BookList = ({
               onChange={handleAuthorChange}
             >
               <option value="">Select Author</option>
-              {Authors.map((person) => {
+              {AuthorsList.map((person) => {
                 return (
                   <option value={person.author_keys} key={person.author_keys}>
                     {person.author_names}

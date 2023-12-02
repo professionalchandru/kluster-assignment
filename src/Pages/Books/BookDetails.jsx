@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -6,7 +7,6 @@ import { BookTitle } from "../../Components/BookCard";
 
 const BookDetails = () => {
   const location = useLocation();
-  const navigate = useNavigate();
   const workKey = location.pathname.split("/books/")[1];
   const [bookDetails, setBookDetails] = useState({});
   const authorName = location.state?.authors[0] || "Author Not Found";
@@ -35,21 +35,14 @@ const BookDetails = () => {
   return (
     <>
       <PageContainer>
-        <button
-          className="text-errorText cursor-pointer"
-          onClick={() => navigate(-1)}
-        >
-          Go Back
-        </button>
+        <GoBack />
         <div className="py-10 space-y-6">
           <div className="flex flex-row justify-between items-center">
             <h2 className="text-xl font-semibold text-primary">Book Details</h2>
           </div>
         </div>
         {errorFound ? (
-          <div className="w-full  h-96 text-center m-auto flex items-center justify-center  text-xl text-errorText font-bold ">
-            {errorFound}
-          </div>
+          <ErrorMessage message={errorFound} />
         ) : (
           <div className="w-full h-full flex flex-row items-start justify-start gap-x-10">
             <div className="">
@@ -84,3 +77,27 @@ const BookDetails = () => {
 };
 
 export default BookDetails;
+
+export const ErrorMessage = ({ message }) => {
+  return (
+    <>
+      <div className="w-full  h-96 text-center m-auto flex items-center justify-center  text-xl text-errorText font-bold ">
+        {message}
+      </div>
+    </>
+  );
+};
+
+export const GoBack = () => {
+  const navigate = useNavigate();
+  return (
+    <>
+      <button
+        className="text-errorText cursor-pointer"
+        onClick={() => navigate(-1)}
+      >
+        Go Back
+      </button>
+    </>
+  );
+};
