@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import cartIcon from "../Assets/png/cart.png";
 import user1 from "../Assets/png/user1.png";
+import { useSelector } from "react-redux";
 
 /* eslint-disable react/prop-types */
 const NavBar = () => {
@@ -9,6 +10,8 @@ const NavBar = () => {
   const location = useLocation();
 
   const [activePage, setActivepage] = useState("");
+
+  const noOfItems = useSelector((state) => state.app.cart.noOfItems);
 
   useEffect(() => {
     setActivepage(location.pathname);
@@ -48,12 +51,17 @@ const NavBar = () => {
           />
         </ul>
         <div className="flex items-center gap-x-8">
-          <img
-            src={cartIcon}
-            alt="notification.svg"
-            className="w-7 h-7 cursor-pointer"
-            onClick={() => handleClick("/cart")}
-          />
+          <div className="inline-flex gapx-1 items-center">
+            <img
+              src={cartIcon}
+              alt="cart-icon.svg"
+              className="w-7 h-7 cursor-pointer"
+              onClick={() => handleClick("/cart")}
+            />
+            <div className="px-2 py-1 text-[10px] bg-special font-bold text-white rounded-full">
+              {noOfItems}
+            </div>
+          </div>
           <img src={user1} alt="user.svg" />
         </div>
       </div>
